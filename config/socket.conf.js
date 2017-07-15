@@ -1,0 +1,1 @@
+//authenticate socket-io
