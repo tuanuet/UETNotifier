@@ -2,11 +2,6 @@
 var mongoose = require('mongoose');
 
 var LopMonHocSchema = mongoose.Schema({
-    id:{
-        type: mongoose.Schema.ObjectId,
-        required: true,
-        unique: true
-    },
     name: {
         type: String,
         required: true
@@ -17,14 +12,11 @@ var LopMonHocSchema = mongoose.Schema({
         ref : 'Term'
     },
     lecturer : [{
-        type: mongoose.Schema.ObjectId,
+        type: Number,
         required : true,
         ref :'Lecturer'
     }]
-},{
-    timestamps : true,
-    _id : false
-});
+},{timestamps : true});
 
 LopMonHocSchema.methods.findJoinAll =  (params) => {
     return LopMonHocSchema.find(params).populate([

@@ -2,19 +2,19 @@
 var mongoose = require('mongoose');
 
 var AdminSchema = mongoose.Schema({
-    id:{
+    _id:{
         type: mongoose.Schema.ObjectId,
         ref : 'User',
         unique:true,
-        required:true
+        required:true,
+        index:true
     },
     name:{
         type:String,
         required: true
     }
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 });
 
 module.exports = mongoose.model('Admin',AdminSchema);

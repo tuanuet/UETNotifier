@@ -1,11 +1,6 @@
 /* eslint-env node */
 var mongoose    = require('mongoose');
 var LopChinhSchema = mongoose.Schema({
-    id:{
-        type: String,
-        required : true,
-        unique: true
-    },
     name:{
         required : true,
         type: String
@@ -15,13 +10,12 @@ var LopChinhSchema = mongoose.Schema({
         ref : 'Lecturer'
     },
     faculty:{
-        required : true,
         type: String,
         ref :'Faculty'
     }
 },{
     timestamps : true,
-    _id : false
+    strict :true
 })
 
 

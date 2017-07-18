@@ -4,7 +4,7 @@
 /* eslint-env node */
 var mongoose = require('mongoose');
 
-var LoaiTinTuc = new mongoose.Schema({
+var KindOfAnnoucement = new mongoose.Schema({
     id: {
         type: Number,
         require: true,
@@ -13,13 +13,9 @@ var LoaiTinTuc = new mongoose.Schema({
     name: {
         type: String,
         require: true
-    },
-    link: {
-        type: String,
-        require: true
     }
 },{
     timestamps : true
 })
 
-module.exports = mongoose.model('KindOfNews', LoaiTinTuc);
+module.exports = mongoose.model('KindOfAnnoucement', KindOfAnnoucement);

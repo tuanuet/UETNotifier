@@ -2,11 +2,6 @@
 var mongoose = require('mongoose');
 //model crawl dũ liệu trên sevêr cũ
 var TinTucSchema = new mongoose.Schema({
-    id:{
-        type:mongoose.Schema.ObjectId,
-        required: true,
-        unique: true
-    },
     link:{
         type: String,
         unique: true,
@@ -35,8 +30,7 @@ var TinTucSchema = new mongoose.Schema({
         ref : 'KindOfNew'
     }
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 })
 TinTucSchema.methods.findLimitOffset = (param,offset,limit = 10) => {
     return TinTucSchema

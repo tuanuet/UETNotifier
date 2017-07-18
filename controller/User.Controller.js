@@ -19,29 +19,13 @@ export const postSignUp = (req ,res) =>{
     });
 };
 
+function getToken(user) {
+    let token = jwt.encode({_id : user._id,time : new Date()}, config.secret);
+    return `JWT ${token}`;
+}
 export const postAuthenticate = (req,res) =>{
-    User.findOneJoinAll({id: req.body.username})
-        .then ((user) => {
-            if (!user) {
-                return res.json(new Error({
-                    success: false,
-                    message: 'Authentication failed ,User not Found.'
-                }));
-            }
-
-            user.comparePassword(req.body.password, (err, isMatch) => {
-                if(!isMatch || err)
-                    return res.json({
-                        succsess: false,
-                        message: 'Authentication failed.Password did not match'
-                    });
-                // if user is found and password is right create a token
-                var token = jwt.encode(user, config.secret);
-
-                // return the information including token as JSON
-                res.json({success: true, token: 'JWT ' + token});
-            });
-        }).catch((err) => {
-            res.json(err);
-        });
+    // if user is found and password is right create a token
+    let token = getToken(req.user)
+    // return the information including token as JSON
+    res.json({success: true, token});
 };

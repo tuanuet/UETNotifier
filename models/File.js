@@ -11,8 +11,7 @@ var FileSchema = mongoose.Schema({
         required:true
     }
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 })
 
 module.exports = mongoose.model('File',FileSchema);

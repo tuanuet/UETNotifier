@@ -1,7 +1,7 @@
 /* eslint-env node */
 var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
-var ThongBaoSchema = mongoose.Schema({
+var ThongBaoSchema = Schema({
     kindOfSender:{
         type: mongoose.Schema.ObjectId,
         enum: ['Department','Faculty','Lecturer']
@@ -28,7 +28,7 @@ var ThongBaoSchema = mongoose.Schema({
     },
     //file đính kèm
     file:[{
-        type: Schema.Schema.ObjectId,
+        type: mongoose.Schema.ObjectId,
         ref : 'File'
     }],
     kindOfAnnouncement:{
@@ -49,7 +49,7 @@ var ThongBaoSchema = mongoose.Schema({
     feedback:[
         {
             kindOfSenderFeedback:{
-                type: mongoose.Schema.ObjectId,
+                type: Number,
                 enum:['Admin','Faculty','Department','Lecturer','Student'],
                 require: true
             },
@@ -58,7 +58,7 @@ var ThongBaoSchema = mongoose.Schema({
                 require: true
             },
             senderFeedback:{
-                type: mongoose.Schema.ObjectId,
+                type: Number,
                 require: true,
                 refPath: 'feedback.kindOfSenderFeedback'
             },
@@ -69,8 +69,7 @@ var ThongBaoSchema = mongoose.Schema({
         }
     ]
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 });
 
 
