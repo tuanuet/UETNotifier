@@ -3,15 +3,8 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
 
-
 // set up a mongoose model
 const UserSchema = new Schema({
-    id:{
-        type: mongoose.Schema.ObjectId,
-        unique: true,
-        required: true,
-        refPath : 'role'
-    },
     email: {
         type: String,
         unique: true,
@@ -22,7 +15,7 @@ const UserSchema = new Schema({
         required: true
     },
     avatar:{
-        data: String,
+        data: Buffer,
         contentType: String,
     },
     role:{
@@ -32,8 +25,7 @@ const UserSchema = new Schema({
         default: 'Student'
     }
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 })
 
 UserSchema.pre('save', function (next) {
@@ -60,10 +52,10 @@ UserSchema.statics.update = function(id, newparams) {
 UserSchema.statics.delete =  function(id) {
     return this.findByIdAndRemove(id);
 };
-UserSchema.statics.findOneJoinAll = function({id}){
+UserSchema.statics.findOneJoinAll = function(id){
     return this
-        .findOne({id});
-    // .populate('id')
+        .findOne({_id : id})
+        .populate([{path : '_id'}]);
 
 };
 

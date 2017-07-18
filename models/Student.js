@@ -2,20 +2,20 @@
 var mongoose = require('mongoose');
 
 var SinhVienSchema =new  mongoose.Schema({
-    id:{
+    _id:{
         type: mongoose.Schema.ObjectId,
         unique: true,
         ref: 'User',
-        required:true
+        required:true,
+        index :true
     },
     name: {
         type: String,
         required: true
     },
     mainClass:{
-        type: String,
-        ref :'MainClass',
-        required:true
+        type: mongoose.Schema.ObjectId,
+        ref :'MainClass'
     },
     course:[{
         type: mongoose.Schema.ObjectId,
@@ -26,15 +26,14 @@ var SinhVienSchema =new  mongoose.Schema({
     },
     kindOfAnnouncement:[{
         type:Number,
-        ref:'KindOfAnnouncement'
+        ref:'KindOfAnnouncement.js'
     }],
     kindOfNew:[{
         type: Number,
         ref:'KindOfNew'
     }]
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 })
 
 

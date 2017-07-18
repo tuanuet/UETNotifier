@@ -2,11 +2,12 @@
 var mongoose = require('mongoose');
 
 var PhongBanSchema = mongoose.Schema({
-    id:{
+    _id:{
         type: mongoose.Schema.ObjectId,
         ref : 'User',
         unique: true,
-        required:true
+        required:true,
+        index:true
     },
     name:{
         type: String,
@@ -14,9 +15,8 @@ var PhongBanSchema = mongoose.Schema({
     }
 
 },{
-    timestamps : true,
-    _id : false
-});
+    timestamps : true
+})
 
 PhongBanSchema.statics.update = (id, params) => {
     return PhongBanSchema.findByIdAndUpdate(id,params,{new: true});

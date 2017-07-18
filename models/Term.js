@@ -5,7 +5,8 @@ var KiHocSchema = mongoose.Schema({
     id:{
         type:mongoose.Schema.ObjectId,
         required: true,
-        unique: true
+        unique: true,
+        default: mongoose.Types.ObjectId()
     },
     name: {
         type: String,
@@ -13,8 +14,7 @@ var KiHocSchema = mongoose.Schema({
     }
 
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 })
 
 module.exports = mongoose.model('Term',KiHocSchema);

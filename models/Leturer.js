@@ -2,11 +2,12 @@
 var mongoose = require('mongoose');
 
 var LecturerSchema = mongoose.Schema({
-    id:{
+    _id:{
         type: mongoose.Schema.ObjectId,
         ref : 'User',
         unique:true,
-        required:true
+        required:true,
+        index:true
     },
     name:{
         type:String,
@@ -17,8 +18,7 @@ var LecturerSchema = mongoose.Schema({
         ref:'Faculty'
     }
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 })
 
 LecturerSchema.statics.findJoinAll = (params) => {

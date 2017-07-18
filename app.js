@@ -1,6 +1,4 @@
-/* eslint-disable */
 /* eslint-env node */
-
 import express from 'express';
 import path from 'path';
 import logger from 'morgan';
@@ -9,16 +7,25 @@ import mongoose from 'mongoose';
 import passport from 'passport';
 import dotenv from 'dotenv';
 import http from 'http';
-
 import config from './config/database.conf'; // get db config file
-import {isAuthenticate} from './middleware/authenticate'
-import { JWTStrategy, LCStrategy } from './config/passport.conf'
+import {isAuthenticate} from './middleware/authenticate';
+import { JWTStrategy, LCStrategy } from './config/passport.conf';
+
+/**
+ * initial Schema for mongodb
+ */
+require('./models/index');
+
 /**
  * Connect to MongoDB.
  */
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database, {useMongoClient: true})
-    .then((status) => console.log('MongoDB connected!'))
+    .then((status) => {
+        console.log('MongoDB connected!');
+        //Seed
+        // require('./seed/factory.seed');
+    })
     .catch((err) => {
         console.log(err);
         process.exit();
@@ -28,7 +35,6 @@ import index from './routes/index';
 import users from './routes/users';
 import api from './routes/api';
 import socketIo from './socket/socket';
-
 
 let app = express();
 
@@ -69,6 +75,7 @@ LCStrategy(passport)
 app.use('/', index);
 app.use('/users', users);
 app.use('/api', isAuthenticate, api);
+
 
 
 module.exports = {app, server};

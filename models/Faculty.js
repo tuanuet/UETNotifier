@@ -2,11 +2,12 @@
 var mongoose   = require('mongoose');
 
 var KhoaSchema = new mongoose.Schema({
-    id:{
+    _id:{
         type: mongoose.Schema.ObjectId,
         ref : 'User',
         unique: true,
-        required:true
+        required:true,
+        index:true
     },
     name: {
         type: String,
@@ -14,8 +15,7 @@ var KhoaSchema = new mongoose.Schema({
         unique:true
     }
 },{
-    timestamps : true,
-    _id : false
+    timestamps : true
 })
 
 module.exports = mongoose.model('Faculty',KhoaSchema);
