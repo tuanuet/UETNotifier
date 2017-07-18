@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 var KiHocSchema = mongoose.Schema({
     id:{
-        type:String,
+        type:mongoose.Schema.ObjectId,
         required: true,
         unique: true
     },
@@ -12,7 +12,10 @@ var KiHocSchema = mongoose.Schema({
         required: true
     }
 
-});
+},{
+    timestamps : true,
+    _id : false
+})
 
 module.exports = mongoose.model('Term',KiHocSchema);
 

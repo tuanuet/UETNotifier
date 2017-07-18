@@ -1,5 +1,5 @@
 /* eslint-env node */
 module.exports = {
-    'secret': 'ilovescotchyscotch',
+    'secret': 'uetnotifier',
     'database': 'mongodb://localhost/uetnotifier',
 };

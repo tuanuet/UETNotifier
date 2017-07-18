@@ -10,19 +10,19 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import http from 'http';
 
-import config from './config/database'; // get db config file
-import {isAuthenticate, Strategy} from './middleware/authenticate'
-
+import config from './config/database.conf'; // get db config file
+import {isAuthenticate} from './middleware/authenticate'
+import { JWTStrategy, LCStrategy } from './config/passport.conf'
 /**
  * Connect to MongoDB.
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(config.database);
-mongoose.connection.on('error', (err) => {
-    console.error(err);
-    console.log('MongoDB connection error. Please make sure MongoDB is running.');
-    process.exit();
-});
+mongoose.connect(config.database, {useMongoClient: true})
+    .then((status) => console.log('MongoDB connected!'))
+    .catch((err) => {
+        console.log(err);
+        process.exit();
+    });
 
 import index from './routes/index';
 import users from './routes/users';
@@ -62,12 +62,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 // pass passport for configuration
 
-Strategy(passport);
+JWTStrategy(passport);
+LCStrategy(passport)
 
 //ROUTES
 app.use('/', index);
 app.use('/users', users);
-app.use('/api', isAuthenticate, api)
+app.use('/api', isAuthenticate, api);
 
 
 module.exports = {app, server};

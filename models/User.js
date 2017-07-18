@@ -7,21 +7,34 @@ const bcrypt = require('bcrypt-nodejs');
 // set up a mongoose model
 const UserSchema = new Schema({
     id:{
-        type: String,
+        type: mongoose.Schema.ObjectId,
         unique: true,
         required: true,
         refPath : 'role'
+    },
+    email: {
+        type: String,
+        unique: true,
+        required: true
     },
     password:{
         type: String,
         required: true
     },
+    avatar:{
+        data: String,
+        contentType: String,
+    },
     role:{
         type: String,
+        required: true,
         enum : ['Admin','Faculty','Department','Lecturer','Student'],
         default: 'Student'
     }
-});
+},{
+    timestamps : true,
+    _id : false
+})
 
 UserSchema.pre('save', function (next) {
     const user = this;

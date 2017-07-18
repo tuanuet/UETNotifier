@@ -18,6 +18,9 @@ var LoaiTinTuc = new mongoose.Schema({
         type: String,
         require: true
     }
-});
+},{
+    timestamps : true,
+    _id : false
+})
 
 module.exports = mongoose.model('KindOfNews', LoaiTinTuc);

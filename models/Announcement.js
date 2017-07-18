@@ -3,11 +3,11 @@ var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 var ThongBaoSchema = mongoose.Schema({
     kindOfSender:{
-        type: String,
+        type: mongoose.Schema.ObjectId,
         enum: ['Department','Faculty','Lecturer']
     },
     kindOfReceiver:{
-        type: String,
+        type: mongoose.Schema.ObjectId,
         enum:['Student','Faculty','Course','MainClass','All']
     },
     title:{
@@ -17,10 +17,6 @@ var ThongBaoSchema = mongoose.Schema({
     content:{
         type: String,
         required: true
-    },
-    time:{
-        type: Date,
-        default: Date.now
     },
     sender:{
         type: String,
@@ -32,7 +28,7 @@ var ThongBaoSchema = mongoose.Schema({
     },
     //file đính kèm
     file:[{
-        type: Schema.Types.ObjectId,
+        type: Schema.Schema.ObjectId,
         ref : 'File'
     }],
     kindOfAnnouncement:{
@@ -53,7 +49,7 @@ var ThongBaoSchema = mongoose.Schema({
     feedback:[
         {
             kindOfSenderFeedback:{
-                type: String,
+                type: mongoose.Schema.ObjectId,
                 enum:['Admin','Faculty','Department','Lecturer','Student'],
                 require: true
             },
@@ -62,7 +58,7 @@ var ThongBaoSchema = mongoose.Schema({
                 require: true
             },
             senderFeedback:{
-                type: String,
+                type: mongoose.Schema.ObjectId,
                 require: true,
                 refPath: 'feedback.kindOfSenderFeedback'
             },
@@ -72,12 +68,15 @@ var ThongBaoSchema = mongoose.Schema({
             }
         }
     ]
+},{
+    timestamps : true,
+    _id : false
 });
 
 
 ThongBaoSchema.methods.findJoinAll = (params) => {
     return ThongBaoSchema.find(params).populate([
-        { path:'file'  },
+        { path:'file' },
         { path:'kindOfAnnouncement' },
         { path: 'priorityNotify' },
         { path:'feedback.senderFeedback'},

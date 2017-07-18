@@ -1,11 +1,12 @@
 /* eslint-env node */
 var mongoose = require('mongoose');
 
-var GiangVienSchema = mongoose.Schema({
+var LecturerSchema = mongoose.Schema({
     id:{
-        type: String,
+        type: mongoose.Schema.ObjectId,
         ref : 'User',
-        unique:true
+        unique:true,
+        required:true
     },
     name:{
         type:String,
@@ -14,24 +15,23 @@ var GiangVienSchema = mongoose.Schema({
     faculty:{
         type:String,
         ref:'Faculty'
-    },
-    course: [{
-        type: String,
-        ref : 'Course'
-    }],
-    avatar:{
-        data: String,
-        contentType: String,
     }
-});
+},{
+    timestamps : true,
+    _id : false
+})
 
-GiangVienSchema.methods.findJoinAll = (params) => {
-    return GiangVienSchema.find(params).populate([
-        { path:'faculty' },
-        { path:'course' }
+LecturerSchema.statics.findJoinAll = (params) => {
+    return LecturerSchema.find(params).populate([
+        { path:'faculty' }
+    ]);
+};
+LecturerSchema.statics.findOneJoinAll = (params) => {
+    return LecturerSchema.findOne(params).populate([
+        { path:'faculty' }
     ]);
 };
 
-module.exports = mongoose.model('Lecturer',GiangVienSchema);
+module.exports = mongoose.model('Lecturer',LecturerSchema);
 
 

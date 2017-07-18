@@ -3,13 +3,17 @@ var mongoose = require('mongoose');
 
 var FileSchema = mongoose.Schema({
     name: {
-        type: String
+        type: String,
+        required: true
     },
     link:{
-        type: String
-    },
-    img: { data: Buffer, contentType: String }
-});
+        type: String,
+        required:true
+    }
+},{
+    timestamps : true,
+    _id : false
+})
 
 module.exports = mongoose.model('File',FileSchema);
 

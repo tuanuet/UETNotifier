@@ -3,9 +3,10 @@ var mongoose = require('mongoose');
 
 var SinhVienSchema =new  mongoose.Schema({
     id:{
-        type: String,
+        type: mongoose.Schema.ObjectId,
         unique: true,
-        ref: 'User'
+        ref: 'User',
+        required:true
     },
     name: {
         type: String,
@@ -13,27 +14,34 @@ var SinhVienSchema =new  mongoose.Schema({
     },
     mainClass:{
         type: String,
-        ref :'MainClass'
+        ref :'MainClass',
+        required:true
     },
     course:[{
-        type: String,
+        type: mongoose.Schema.ObjectId,
         ref: 'Course'
     }],
     token:{
         type: String
     },
-    avatar:{
-        date: String,
-        contentType: String,
-    }
-});
+    kindOfAnnouncement:[{
+        type:Number,
+        ref:'KindOfAnnouncement'
+    }],
+    kindOfNew:[{
+        type: Number,
+        ref:'KindOfNew'
+    }]
+},{
+    timestamps : true,
+    _id : false
+})
 
 
-
-SinhVienSchema.methods.findJoinAll = (params) => {
+SinhVienSchema.methods.findOneJoinAll = (params) => {
     return(
         SinhVienSchema
-        .find(params)
+        .findOne(params)
         .populate([
             {
                 path:'mainClass',
@@ -42,7 +50,9 @@ SinhVienSchema.methods.findJoinAll = (params) => {
             {
                 path:'course',
                 populate:{ path:'lecture'}
-            }
+            },
+            { path:'kindOfAnnouncement' },
+            { path:'kindOfNew' }
         ])
     );
 };
