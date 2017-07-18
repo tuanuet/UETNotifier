@@ -31,11 +31,6 @@ mongoose.connect(config.database, {useMongoClient: true})
         process.exit();
     });
 
-import index from './routes/index';
-import users from './routes/users';
-import api from './routes/api';
-import socketIo from './socket/socket';
-
 let app = express();
 
 /**
@@ -71,9 +66,15 @@ app.use(passport.initialize());
 JWTStrategy(passport);
 LCStrategy(passport)
 
+import index from './routes/index';
+import users from './routes/users';
+import api from './routes/api';
+import socketIo from './socket/socket';
+
+
 //ROUTES
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', users);
 app.use('/api', isAuthenticate, api);
 
 

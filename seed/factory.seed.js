@@ -7,14 +7,15 @@ import Faculty from '../models/Faculty';
 import Lecturer from  '../models/Leturer';
 import Department from '../models/Department';
 import Async from 'async';
+import mongoose from 'mongoose';
 
 const seedMainClass = () => {
     for (let i=0;i<10;i++) {
         let cla = new MainClass({
             name: `Class ${i + 1}`
         })
-        cla.save().then(classs => {
-            console.log('Create Class success')
+        cla.save().then(() => {
+            console.log('Create Class success');
         });
     }
 }
@@ -33,8 +34,10 @@ const createUser = (role,idStart) => {
     return users;
 
 }
-const seedUser = (idStart,Model) => {
-    const users = createUser('Student',idStart);
+const seedUser = (idStart,model) => {
+    const users = createUser(model,idStart);
+    const Model = mongoose.model(model);
+
     return User.create(users)
         .then((users) => {
             return users.map((user) => {
@@ -53,7 +56,7 @@ const seed = () => {
     Async.waterfall([
         (cb) => {seedMainClass(); cb(null);} ,
         (cb) => {
-            seedUser(0,Student)
+            seedUser(0,'Student')
                 .then(()=>{
                     console.log('Import Student Success')
                     cb(null);
@@ -61,7 +64,7 @@ const seed = () => {
                 .catch(err => cb(err));
         },
         (cb) => {
-            seedUser(10,Lecturer)
+            seedUser(10,'Lecturer')
                 .then(()=>{
                     console.log('Import Lecturer Success')
                     cb(null);
@@ -69,7 +72,7 @@ const seed = () => {
                 .catch(err => cb(err));
         },
         (cb) => {
-            seedUser(20,Department)
+            seedUser(20,'Department')
                 .then(()=>{
                     console.log('Import Department Success')
                     cb(null);
@@ -77,7 +80,7 @@ const seed = () => {
                 .catch(err => cb(err));
         },
         (cb) => {
-            seedUser(30,Faculty)
+            seedUser(30,'Faculty')
                 .then(()=>{
                     console.log('Import Faculty Success')
                     cb(null);
