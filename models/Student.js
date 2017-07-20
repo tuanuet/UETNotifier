@@ -11,7 +11,8 @@ var SinhVienSchema =new  mongoose.Schema({
     },
     name: {
         type: String,
-        required: true
+        required: true,
+        index:true
     },
     mainClass:{
         type: mongoose.Schema.ObjectId,

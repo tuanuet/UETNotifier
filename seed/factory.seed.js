@@ -23,7 +23,7 @@ const seedMainClass = () => {
 
 const createUser = (role,idStart) => {
     let users = [];
-    for(let i=idStart;i<idStart+10;i++){
+    for(let i=idStart;i<idStart+100;i++){
         let user = new User({
             email : faker.internet.email(),
             password : '1',
@@ -43,7 +43,8 @@ const seedUser = (idStart,model) => {
             return users.map((user) => {
                 return new Model({
                     _id:user._id,
-                    name: faker.name.lastName()
+                    name: faker.name.lastName(),
+                    password: '1'
                 });
             });
         })
@@ -64,7 +65,7 @@ const seed = () => {
                 .catch(err => cb(err));
         },
         (cb) => {
-            seedUser(10,'Lecturer')
+            seedUser(100,'Lecturer')
                 .then(()=>{
                     console.log('Import Lecturer Success')
                     cb(null);
@@ -72,7 +73,7 @@ const seed = () => {
                 .catch(err => cb(err));
         },
         (cb) => {
-            seedUser(20,'Department')
+            seedUser(200,'Department')
                 .then(()=>{
                     console.log('Import Department Success')
                     cb(null);
@@ -80,7 +81,7 @@ const seed = () => {
                 .catch(err => cb(err));
         },
         (cb) => {
-            seedUser(30,'Faculty')
+            seedUser(300,'Faculty')
                 .then(()=>{
                     console.log('Import Faculty Success')
                     cb(null);

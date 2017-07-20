@@ -2,42 +2,27 @@
 import express from 'express';
 const router = express.Router();
 
-import {
-    getAllKindOfAnnoucement,
-    postKindOfAnnoucement,
-    postKindOfNew,
-    getAllKindOfNew,
-
-} from '../controller/Api.Controller';
-
-import {
-    getAnnoucement,
-    getAllAnnoucement,
-    postAnnoucement
-} from '../controller/Api.Controller';
-
-
+import ApiController from '../controller/Api.Controller';
 /**
  * All about Resource
  */
-
 router.route('/kindofannoucement')
-    .get(getAllKindOfAnnoucement)
-    .post(postKindOfAnnoucement);
+    .get(ApiController.getAllKindOfAnnoucement)
+    .post(ApiController.postKindOfAnnoucement);
 
 router.route('/kindofnew')
-    .get(getAllKindOfNew)
-    .post(postKindOfNew);
+    .get(ApiController.getAllKindOfNew)
+    .post(ApiController.postKindOfNew);
 
 /**
  * All about Annoucement
  */
 router.route('/annoucement')
-    .get(getAllAnnoucement)
-    .post(postAnnoucement);
+    .get(ApiController.getAllAnnoucement)
+    .post(ApiController.postAnnoucement);
 
-router.route('/:id')
-    .get(getAnnoucement);
+router.route('/annoucement/:id')
+    .get(ApiController.getAnnoucement);
 /**
  *
  */

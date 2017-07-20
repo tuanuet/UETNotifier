@@ -8,8 +8,12 @@ import passport from 'passport';
 import dotenv from 'dotenv';
 import http from 'http';
 import config from './config/database.conf'; // get db config file
-import {isAuthenticate} from './middleware/authenticate';
 import { JWTStrategy, LCStrategy } from './config/passport.conf';
+import socketIo from './socket/socket';
+import index from './routes/index';
+import users from './routes/users';
+import api from './routes/api';
+import admin from './routes/admin';
 
 /**
  * initial Schema for mongodb
@@ -20,8 +24,8 @@ require('./models/index');
  * Connect to MongoDB.
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(config.database, {useMongoClient: true})
-    .then((status) => {
+mongoose.connect(config.database, {useMongoClient: true,poolSize:5})
+    .then(() => {
         console.log('MongoDB connected!');
         //Seed
         // require('./seed/factory.seed');
@@ -62,21 +66,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Use the passport package in our application
 app.use(passport.initialize());
 // pass passport for configuration
-
+//
 JWTStrategy(passport);
-LCStrategy(passport)
+LCStrategy(passport);
 
-import index from './routes/index';
-import users from './routes/users';
-import api from './routes/api';
-import socketIo from './socket/socket';
-
-
-//ROUTES
+// //ROUTES
 app.use('/', index);
-app.use('/user', users);
-app.use('/api', isAuthenticate, api);
-
-
+app.use('/users', users);
+app.use('/api', api);
+app.use('/admin',admin);
 
 module.exports = {app, server};

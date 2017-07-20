@@ -60,5 +60,4 @@ typings/
 /=3.0.0
 /package-lock.json
 /yarn.lock
-.idea/workspace.xml
 .idea/*
